@@ -1433,6 +1433,13 @@ class AdobePassIE(InfoExtractor):
                             provider_redirect_page, 'oauth redirect')
                         self._download_webpage(
                             oauth_redirect_url, video_id, 'Confirming auto login')
+                    elif 'You\'re automatically signed in' in provider_redirect_page:
+                        oauth_redirect_url = self._html_search_regex(
+                            r'continue: "(.+)"',
+                           provider_redirect_page, 'oauth redirect')
+                        print(oauth_redirect_url)
+                        self._download_webpage(
+                           oauth_redirect_url, video_id, 'Confirming auto login')
                     else:
                         if '<form name="signin"' in provider_redirect_page:
                             provider_login_page_res = provider_redirect_page_res
